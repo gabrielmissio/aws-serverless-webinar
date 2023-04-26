@@ -7,13 +7,13 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/main/config/handler.js",
+    "dev": "IS_LOCALHOST=true nodemon src/main/config/handler.js",
     "migrations_start": "OPERATION=start node src/infra/migrations/create-users-table.js",
     "migrations_undo": "OPERATION=undo node src/infra/migrations/create-users-table.js",
     "seeds_start": "OPERATION=start node src/infra/seeds/users-demo.js",
     "seeds_undo": "OPERATION=undo node src/infra/seeds/users-demo.js",
     "list_dynamodblocal_tables": "aws dynamodb list-tables --endpoint-url http://localhost:8000 --region localhost",
-    "scan_dynamodblocal_table": "aws dynamodb scan --table-name webinar-cloud-users-dev --endpoint-url http://localhost:8000 --region localhost"
+    "scan_dynamodblocal_table": "aws dynamodb scan --table-name webinar-cloud-users-local --endpoint-url http://localhost:8000 --region localhost"
   },
   "dependencies": {
     "aws-sdk": "^2.1365.0",
@@ -21,6 +21,7 @@
     "joi": "^17.9.2"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.22"
   }
 }
