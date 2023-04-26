@@ -1,0 +1,27 @@
+[
+    {
+        "id": "17ed9632-7c45-4217-b7e4-6871df5a70dc",
+        "email": "john@mail.com",
+        "name": "John Doe"
+    },
+    {
+        "id": "6309e84f-5f5c-408d-a482-2c5310e12d8f",
+        "email": "jane@mail.com",
+        "name": "Jane Smith"
+    },
+    {
+        "id": "c3d6b8c6-4615-43a9-b9eb-83f496bbf3d1",
+        "email": "jimmy@mail.com",
+        "name": "Jimmy Johnson"
+    },
+    {
+        "id": "de9037e4-4f96-4d10-aa4a-33c5489744b2",
+        "email": "sara@mail.com",
+        "name": "Sara Williams"
+    },
+    {
+        "id": "55d1f9cb-2345-48b7-a20b-0088346de729",
+        "email": "bob@mail.com",
+        "name": "Bob Brown"
+    }
+]
