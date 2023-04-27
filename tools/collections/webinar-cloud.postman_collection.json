@@ -96,6 +96,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get-all-users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user-api-url}}/users",
+							"host": [
+								"{{user-api-url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "next",
+									"value": "55d1f9cb-2345-48b7-a20b-0088346de729",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
