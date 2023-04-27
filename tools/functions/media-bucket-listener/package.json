@@ -1,0 +1,15 @@
+{
+  "name": "media-bucket-listiner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "sls invoke local --function main --path events/create-object-demo.json"
+  },
+  "author": "Gabriel Missio",
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "aws-sdk": "^2.1366.0"
+  }
+}
