@@ -1,0 +1,50 @@
+service: wbc-media-bucket-listener
+
+useDotenv: true
+
+custom:
+  params:
+    MEDIA_BUCKET_NAME: ${env:MEDIA_BUCKET_NAME}
+    USER_TABLE_NAME: ${env:USER_TABLE_NAME}
+    USER_TABLE_ARN: ${env:USER_TABLE_ARN}
+
+package:
+  patterns:
+    - '!./**'
+    - './handler.js'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    REGION: ${opt:region, 'us-east-1'}
+    MEDIA_BUCKET_NAME: ${self:custom.params.MEDIA_BUCKET_NAME}
+    USER_TABLE_NAME: ${self:custom.params.USER_TABLE_NAME}
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:GetItem'
+            - 'dynamodb:UpdateItem'
+          Resource:
+            - ${self:custom.params.USER_TABLE_ARN}
+        - Effect: 'Allow'
+          Action:
+            - 's3:GetObject'
+          Resource:
+            - 'arn:aws:s3:::${self:custom.params.MEDIA_BUCKET_NAME}'
+
+functions:
+  main:
+    handler: handler.handler
+    timeout: 30
+    events:
+      - s3:
+          bucket: ${self:custom.params.MEDIA_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: imgs/
+          existing: true
