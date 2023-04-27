@@ -1,0 +1,12 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Gabriel Missio",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "aws s3 sync . s3://$WEB_SITE_BUCKET --exclude '*' --include 'media/*' --include 'src/*' --include 'styles/*' --include 'index.html'"
+  }
+}
