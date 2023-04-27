@@ -52,10 +52,9 @@ exports.getAllUsers = async (pageSize = 10, next) => {
 exports.updateUserImage = async (idOrEmail) => {
   const user = await exports.getUser(idOrEmail) // throws NotFoundError if user not found
 
-  const key = `imgs/${user.id}`
   const metadata = { userId: user.id }
 
-  const preSignedUrl = await mediaRepository.generatePresignedUrl(key, metadata)
+  const preSignedUrl = await mediaRepository.generatePresignedUrl('imgs', metadata)
 
   return preSignedUrl
 }
