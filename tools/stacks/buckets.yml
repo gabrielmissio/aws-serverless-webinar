@@ -9,6 +9,14 @@ Resources:
       OwnershipControls:
         Rules:
           - ObjectOwnership: ObjectWriter
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - 'PUT'
+            AllowedOrigins:
+              - '*'
 
   MediaBucketPolicy:
     Type: AWS::S3::BucketPolicy
