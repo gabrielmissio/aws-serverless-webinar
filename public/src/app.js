@@ -1,37 +1,46 @@
 const container = document.querySelector('.container')
 
-// Make a GET request to the getUser endpoint of your user API
-fetch('http://localhost:3000/users/17ed9632-7c45-4217-b7e4-6871df5a70dc')
-  .then(response => response.json())
-  .then(user => {
-    // Create some HTML elements to display the user information
-    const profile = document.createElement('div')
-    profile.className = 'profile'
+function loadProfiles () {
+  // Make a GET request to the getUsers endpoint of your user API
+  fetch('http://localhost:3000/users/17ed9632-7c45-4217-b7e4-6871df5a70dc')
+    .then(response => response.json())
+    .then(users => {
+      container.innerHTML = ''
 
-    const profileInfo = document.createElement('div')
-    profileInfo.className = 'profile-info'
+      // Create some HTML elements to display the user information
+      const profiles = [users, users, users, users, users, users].map(user => makeProfileComponent(user))
+      profiles.forEach(profile => container.appendChild(profile))
+    })
+    .catch(error => {
+      // Display an error message if the request fails
+      container.innerHTML = `<p>Error: ${error.message}</p>`
+    })
+}
 
-    const name = document.createElement('h2')
-    name.textContent = user.name
+function makeProfileComponent (user) {
+  const profile = document.createElement('div')
+  profile.className = 'profile'
 
-    const email = document.createElement('p')
-    email.textContent = user.email
+  const profileInfo = document.createElement('div')
+  profileInfo.className = 'profile-info'
 
-    const profileImage = document.createElement('img')
-    profileImage.className = 'profile-image'
-    profileImage.src = user.profileUrl || '../media/default-profile-icon.png'
+  const name = document.createElement('h2')
+  name.textContent = user.name
 
-    // Add the HTML elements to the page
-    profileInfo.appendChild(name)
-    profileInfo.appendChild(email)
+  const email = document.createElement('p')
+  email.textContent = user.email
 
-    profile.appendChild(profileImage)
-    profile.appendChild(profileInfo)
+  const profileImage = document.createElement('img')
+  profileImage.className = 'profile-image'
+  profileImage.src = user.profileUrl || '../media/default-profile-icon.png'
 
-    container.innerHTML = ''
-    container.appendChild(profile)
-  })
-  .catch(error => {
-    // Display an error message if the request fails
-    container.innerHTML = `<p>Error: ${error.message}</p>`
-  })
+  profileInfo.appendChild(name)
+  profileInfo.appendChild(email)
+
+  profile.appendChild(profileImage)
+  profile.appendChild(profileInfo)
+
+  return profile
+}
+
+loadProfiles()
