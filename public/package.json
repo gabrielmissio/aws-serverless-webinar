@@ -7,7 +7,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "http-server src/index.html"
+    "dev": "http-server src/index.html",
+    "deploy": "aws s3 sync . s3://$WEB_SITE_BUCKET --include './*' --exclude 'node_modules/*' --exclude 'package.json' --exclude 'package-lock.json'"
   },
   "devDependencies": {
     "http-server": "^14.1.1"
