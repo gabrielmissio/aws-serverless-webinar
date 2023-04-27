@@ -28,3 +28,10 @@ module.exports.deleteUser = Joi.object({
     idOrEmail: Joi.string().required()
   })
 }).unknown(true)
+
+module.exports.getAllUsers = Joi.object({
+  query: Joi.object({
+    pageSize: Joi.number().min(1),
+    next: Joi.string()
+  })
+}).unknown(true)

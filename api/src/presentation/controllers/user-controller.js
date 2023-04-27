@@ -40,3 +40,13 @@ exports.deleteUser = async (req, res) => {
     return errorHandler(err, res)
   }
 }
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userService.getAllUsers(req.query.pageSize, req.query.next)
+    return res.status(200).json(users)
+  } catch (err) {
+    console.error(err)
+    return errorHandler(err, res)
+  }
+}

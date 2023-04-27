@@ -105,3 +105,21 @@ exports.delete = async (id) => {
     throw new IntegrationError('Error deleting user')
   }
 }
+
+exports.getAll = async (pageSize, lastEvaluatedKey) => {
+  const params = {
+    TableName: process.env.USER_TABLE_NAME,
+    Limit: pageSize,
+    ExclusiveStartKey: lastEvaluatedKey ? { id: lastEvaluatedKey } : undefined
+  }
+
+  const { Items, LastEvaluatedKey } = await dynamodb.scan(params).promise()
+
+  return {
+    data: Items,
+    metadata: {
+      next: !!LastEvaluatedKey,
+      lastEvaluatedKey: LastEvaluatedKey ? LastEvaluatedKey.id : undefined
+    }
+  }
+}

@@ -41,3 +41,9 @@ exports.deleteUser = async (idOrEmail) => {
 
   await userRepository.delete(user.id)
 }
+
+exports.getAllUsers = async (pageSize = 10, next) => {
+  const users = await userRepository.getAll(pageSize, next)
+
+  return users
+}
