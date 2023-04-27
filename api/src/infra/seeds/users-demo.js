@@ -1,15 +1,16 @@
+require('dotenv').config()
 const DynamoDB = require('aws-sdk/clients/dynamodb')
 const items = require('./items.json')
 
 const dynamodb = new DynamoDB.DocumentClient({
-  region: 'local',
-  endpoint: 'http://localhost:8000'
+  region: process.env.REGION,
+  endpoint: process.env.DYNAMODBLOCAL_ENDPOINT
 })
 
 const putItems = () => {
   items.forEach(async (item) => {
     await dynamodb.put({
-      TableName: process.env.TABLE_NAME || 'webinar-cloud-users-dev',
+      TableName: process.env.USER_TABLE_NAME,
       Item: item
     }).promise()
 
@@ -20,7 +21,7 @@ const putItems = () => {
 const deleteItems = () => {
   items.forEach(async (item) => {
     await dynamodb.delete({
-      TableName: process.env.TABLE_NAME || 'webinar-cloud-users-dev',
+      TableName: process.env.USER_TABLE_NAME,
       Key: { id: item.id }
     }).promise()
 

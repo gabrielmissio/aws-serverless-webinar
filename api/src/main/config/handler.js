@@ -1,3 +1,7 @@
+if (process.env.IS_LOCALHOST === 'true') {
+  require('dotenv').config()
+}
+
 const app = require('./app')
 
 const PORT = process.env.PORT || 3000

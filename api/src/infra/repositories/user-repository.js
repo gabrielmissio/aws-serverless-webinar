@@ -3,16 +3,14 @@ const { randomUUID } = require('crypto')
 const { makeDynamicUpdateParams } = require('../helpers/dynamodb-helper')
 const IntegrationError = require('../../utils/errors/integration-error')
 
-const REGION = process.env.REGION || 'us-east-1'
-const ENDPOINT = REGION === 'local' ? 'http://localhost:8000' : undefined
+const REGION = process.env.REGION
+const ENDPOINT = REGION === 'local' ? process.env.DYNAMODBLOCAL_ENDPOINT : undefined
 const dynamodb = new DynamoDB.DocumentClient({ region: REGION, endpoint: ENDPOINT })
-
-const TABLE_NAME = 'webinar-cloud-users-dev' // TODO: get from env var
 
 exports.getByEmail = async (email) => {
   try {
     const params = {
-      TableName: TABLE_NAME,
+      TableName: process.env.USER_TABLE_NAME,
       IndexName: 'email-index',
       KeyConditionExpression: 'email = :email',
       ExpressionAttributeValues: {
@@ -34,7 +32,7 @@ exports.getByEmail = async (email) => {
 exports.getById = async (id) => {
   try {
     const params = {
-      TableName: TABLE_NAME,
+      TableName: process.env.USER_TABLE_NAME,
       Key: {
         id
       }
@@ -59,7 +57,7 @@ exports.create = async (userData) => {
     }
 
     const params = {
-      TableName: TABLE_NAME,
+      TableName: process.env.USER_TABLE_NAME,
       Item: newUser,
       ConditionExpression: 'attribute_not_exists(id) AND attribute_not_exists(email)'
     }
@@ -75,7 +73,7 @@ exports.create = async (userData) => {
 exports.update = async (id, userData) => {
   try {
     const params = {
-      TableName: TABLE_NAME,
+      TableName: process.env.USER_TABLE_NAME,
       Key: { id },
       ReturnValues: 'ALL_NEW',
       ...makeDynamicUpdateParams(userData)
@@ -95,7 +93,7 @@ exports.update = async (id, userData) => {
 exports.delete = async (id) => {
   try {
     const params = {
-      TableName: TABLE_NAME,
+      TableName: process.env.USER_TABLE_NAME,
       Key: {
         id
       }

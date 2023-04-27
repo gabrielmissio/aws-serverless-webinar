@@ -3,15 +3,16 @@
 * In other environments, AWS CloudFormation should be used to manage the dynamodb resources.
 */
 
+require('dotenv').config()
 const DynamoDB = require('aws-sdk/clients/dynamodb')
 
 const dynamodb = new DynamoDB({
-  region: 'local',
-  endpoint: 'http://localhost:8000'
+  region: process.env.REGION,
+  endpoint: process.env.DYNAMODBLOCAL_ENDPOINT
 })
 
 const params = {
-  TableName: process.env.TABLE_NAME || 'webinar-cloud-users-dev',
+  TableName: process.env.USER_TABLE_NAME,
   AttributeDefinitions: [
     {
       AttributeName: 'id',
