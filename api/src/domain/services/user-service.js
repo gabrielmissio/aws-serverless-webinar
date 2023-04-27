@@ -1,3 +1,4 @@
+const mediaRepository = require('../../infra/repositories/media-repository')
 const userRepository = require('../../infra/repositories/user-repository')
 const ConflictError = require('../../utils/errors/conflict-error')
 const NotFoundError = require('../../utils/errors/not-found-error')
@@ -46,4 +47,15 @@ exports.getAllUsers = async (pageSize = 10, next) => {
   const users = await userRepository.getAll(pageSize, next)
 
   return users
+}
+
+exports.updateUserImage = async (idOrEmail) => {
+  const user = await exports.getUser(idOrEmail) // throws NotFoundError if user not found
+
+  const key = `imgs/${user.id}`
+  const metadata = { userId: user.id }
+
+  const preSignedUrl = await mediaRepository.generatePresignedUrl(key, metadata)
+
+  return preSignedUrl
 }
