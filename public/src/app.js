@@ -2,13 +2,13 @@ const container = document.querySelector('.container')
 
 function loadProfiles () {
   // Make a GET request to the getUsers endpoint of your user API
-  fetch('http://localhost:3000/users/17ed9632-7c45-4217-b7e4-6871df5a70dc')
+  fetch('https://mpec1xlmz5.execute-api.us-east-1.amazonaws.com/dev/users')
     .then(response => response.json())
     .then(users => {
       container.innerHTML = ''
 
       // Create some HTML elements to display the user information
-      const profiles = [users, users, users, users, users, users].map(user => makeProfileComponent(user))
+      const profiles = users.data.map(user => makeProfileComponent(user))
       profiles.forEach(profile => container.appendChild(profile))
     })
     .catch(error => {
@@ -32,7 +32,7 @@ function makeProfileComponent (user) {
 
   const profileImage = document.createElement('img')
   profileImage.className = 'profile-image'
-  profileImage.src = user.profileUrl || '../media/default-profile-icon.png'
+  profileImage.src = user.profileUrl || 'media/default-profile-icon.png'
 
   profileInfo.appendChild(name)
   profileInfo.appendChild(email)
