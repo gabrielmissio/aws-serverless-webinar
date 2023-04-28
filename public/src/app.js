@@ -2,7 +2,7 @@ const container = document.querySelector('.container')
 
 function loadProfiles () {
   // Make a GET request to the getUsers endpoint of your user API
-  fetch('https://mpec1xlmz5.execute-api.us-east-1.amazonaws.com/dev/users')
+  fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(users => {
       container.innerHTML = ''
