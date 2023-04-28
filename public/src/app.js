@@ -2,7 +2,7 @@ const container = document.querySelector('.container')
 
 function loadProfiles () {
   // Make a GET request to the getUsers endpoint of your user API
-  fetch('http://localhost:3000/users')
+  fetch('http://localhost:3000/users') // Replace "http://localhost:3000" with the URL of your user API
     .then(response => response.json())
     .then(users => {
       container.innerHTML = ''

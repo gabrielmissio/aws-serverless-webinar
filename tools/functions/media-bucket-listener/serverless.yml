@@ -1,37 +1,43 @@
+# This file is used to configure the serverless framework
+
+# Service name
 service: wbc-media-bucket-listener
 
+# Load environment variable from ".env"
 useDotenv: true
 
+# Custom variables (accessed via ${self:custom.params.VARIABLE_NAME})
 custom:
   params:
     MEDIA_BUCKET_NAME: ${env:MEDIA_BUCKET_NAME}
     USER_TABLE_NAME: ${env:USER_TABLE_NAME}
     USER_TABLE_ARN: ${env:USER_TABLE_ARN}
 
+# Which files should or should not be packed in the lambda function
 package:
   patterns:
-    - '!./**'
-    - './handler.js'
+    - '!./**' # Exclude all files
+    - './handler.js' # Include handler.js
 
 provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
-  environment:
+  environment: # Environment variables
     REGION: ${opt:region, 'us-east-1'}
     MEDIA_BUCKET_NAME: ${self:custom.params.MEDIA_BUCKET_NAME}
     USER_TABLE_NAME: ${self:custom.params.USER_TABLE_NAME}
-  iam:
+  iam: # Permissions for the lambda function
     role:
       statements:
-        - Effect: 'Allow'
+        - Effect: 'Allow' # Allow the lambda function to access the user table
           Action:
             - 'dynamodb:GetItem'
             - 'dynamodb:UpdateItem'
           Resource:
             - ${self:custom.params.USER_TABLE_ARN}
-        - Effect: 'Allow'
+        - Effect: 'Allow' # Allow the lambda function to access the media bucket
           Action:
             - 's3:GetObject'
           Resource:
@@ -40,9 +46,9 @@ provider:
 functions:
   main:
     handler: handler.handler
-    timeout: 30
+    timeout: 30 # Timeout in seconds
     events:
-      - s3:
+      - s3: # Trigger the lambda function when a new image is uploaded to the media bucket
           bucket: ${self:custom.params.MEDIA_BUCKET_NAME}
           event: s3:ObjectCreated:*
           rules:
