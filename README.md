@@ -18,7 +18,7 @@ The `/tools/stacks` folder contains the CloudFormation templates used to create 
 
 ### Function
 
-The `/tools/function` folder contains the code for the Lambda function that listens to the media S3 bucket and updates the user's DynamoDB record when a new image is uploaded.
+The `/tools/functions` folder contains the code for the Lambda function that listens to the media S3 bucket and updates the user's DynamoDB record when a new image is uploaded.
 
 ### Collection
 
@@ -28,7 +28,7 @@ The `/tools/collection` folder contains a Postman collection that can be used to
 
 To get started with this repository, you'll need to have an AWS account and the AWS CLI installed on your local machine. You can use the CloudFormation templates in the `/tools/stacks` folder to create the necessary resources in AWS.
 
-Once you have the resources created, you can deploy the User API and Media Bucket Listener using the Serverless Framework. The Serverless Framework configuration files are included in the `/api` and `/tools/function` folders.
+Once you have the resources created, you can deploy the User API and Media Bucket Listener using the Serverless Framework. The Serverless Framework configuration files are included in the `/api` and `/tools/functions` folders.
 
 For more information on how to deploy the application, please refer to the README files in each folder.
 
