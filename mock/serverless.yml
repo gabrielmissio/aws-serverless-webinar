@@ -1,18 +1,23 @@
+# This file is used to configure the serverless framework
+
+# Service name
 service: webinar-cloud-mock
 
+# Which files should or should not be packed in the lambda function
 package:
   patterns:
-    - './**'
+    - './**' #  Include all files
 
 provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+
 functions:
   main:
     handler: handler.handler
-    timeout: 30
+    timeout: 30 # Timeout in seconds
     events:
       - http:
           method: GET

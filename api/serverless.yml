@@ -1,39 +1,43 @@
+# This file is used to configure the serverless framework
+
+# Service name
 service: webinar-cloud-user-api
 
-## load environment variable from ".env"
+# Load environment variable from ".env"
 useDotenv: true
 
-## allows you to run the application on localhost
+# Allows you to run the application on localhost
 plugins:
   - serverless-offline
 
+# Custom variables (accessed via ${self:custom.params.VARIABLE_NAME})
 custom:
   params:
     MEDIA_BUCKET_NAME: ${env:MEDIA_BUCKET_NAME}
     USER_TABLE_NAME: ${env:USER_TABLE_NAME}
     USER_TABLE_ARN: ${env:USER_TABLE_ARN}
 
-## which files should or should not be packed in the lambda function
+# Which files should or should not be packed in the lambda function
 package:
   patterns:
-    - '!./**'
-    - './src/**'
-    - './node_modules/**'
-    - '!./node_modules/aws-sdk/**'
+    - '!./**' # Exclude all files
+    - './src/**' # Include src
+    - './node_modules/**' # Include node_modules
+    - '!./node_modules/aws-sdk/**' # Exclude aws-sdk from being packaged (aws-sdk is included natively in lambda)
 
 provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
-  environment:
+  environment: # Environment variables
     REGION: ${opt:region, 'us-east-1'}
     MEDIA_BUCKET_NAME: ${self:custom.params.MEDIA_BUCKET_NAME}
     USER_TABLE_NAME: ${self:custom.params.USER_TABLE_NAME}
   iam:
     role:
-      statements:
-        - Effect: 'Allow'
+      statements: # Permissions for the lambda function
+        - Effect: 'Allow' # Allow the lambda function to access the user table
           Action:
             - 'dynamodb:Scan'
             - 'dynamodb:Query'
@@ -44,7 +48,7 @@ provider:
           Resource:
             - ${self:custom.params.USER_TABLE_ARN}
             - ${self:custom.params.USER_TABLE_ARN}/index/*
-        - Effect: 'Allow'
+        - Effect: 'Allow' # Allow the lambda function to access the media bucket
           Action:
             - 's3:PutObject'
             - 's3:GetObject'
@@ -52,9 +56,10 @@ provider:
             - 'arn:aws:s3:::${self:custom.params.MEDIA_BUCKET_NAME}'
 
 functions:
+  # Lambda function for the user API
   main:
     handler: src/main/config/handler.handler
-    timeout: 7
+    timeout: 7 # Timeout in seconds
     events:
       - http:
           method: GET
