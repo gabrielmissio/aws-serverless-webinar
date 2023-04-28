@@ -10,5 +10,6 @@ router.get('/users', validator(userSchemas.getAllUsers), userController.getAllUs
 router.get('/users/:idOrEmail', validator(userSchemas.getUser), userController.getUser)
 router.patch('/users/:idOrEmail', validator(userSchemas.updateUser), userController.updateUser)
 router.delete('/users/:idOrEmail', validator(userSchemas.deleteUser), userController.deleteUser)
+router.patch('/users/:idOrEmail/image', validator(userSchemas.updateUserImage), userController.updateUserImage)
 
 module.exports = router

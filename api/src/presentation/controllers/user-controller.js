@@ -50,3 +50,13 @@ exports.getAllUsers = async (req, res) => {
     return errorHandler(err, res)
   }
 }
+
+exports.updateUserImage = async (req, res) => {
+  try {
+    const uploadConfig = await userService.updateUserImage(req.params.idOrEmail)
+    return res.status(200).json(uploadConfig)
+  } catch (err) {
+    console.error(err)
+    return errorHandler(err, res)
+  }
+}

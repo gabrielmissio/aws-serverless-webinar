@@ -9,6 +9,9 @@ Resources:
       OwnershipControls:
         Rules:
           - ObjectOwnership: ObjectWriter
+      NotificationConfiguration:
+        EventBridgeConfiguration:
+          EventBridgeEnabled: true
       CorsConfiguration:
         CorsRules:
           - AllowedHeaders:

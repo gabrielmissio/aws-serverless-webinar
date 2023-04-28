@@ -35,3 +35,9 @@ module.exports.getAllUsers = Joi.object({
     next: Joi.string()
   })
 }).unknown(true)
+
+module.exports.updateUserImage = Joi.object({
+  params: Joi.object({
+    idOrEmail: Joi.string().required()
+  })
+}).unknown(true)
