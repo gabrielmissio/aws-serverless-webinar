@@ -7,7 +7,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "IS_LOCALHOST=true nodemon src/main/config/handler.js",
+    "dev": "sls offline start --stage dev",
+    "deploy": "sls deploy --verbose --stage dev",
     "migrations_start": "OPERATION=start node src/infra/migrations/create-users-table.js",
     "migrations_undo": "OPERATION=undo node src/infra/migrations/create-users-table.js",
     "seeds_start": "OPERATION=start node src/infra/seeds/users-demo.js",
