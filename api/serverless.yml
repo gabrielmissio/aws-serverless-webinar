@@ -73,6 +73,10 @@ functions:
           path: '/users/{idOrEmail}'
           cors: true
       - http:
+          method: PATCH
+          path: '/users/{idOrEmail}/image'
+          cors: true
+      - http:
           method: DELETE
           path: '/users/{idOrEmail}'
           cors: true
