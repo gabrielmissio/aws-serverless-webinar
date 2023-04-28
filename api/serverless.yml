@@ -1,0 +1,82 @@
+service: webinar-cloud-user-api
+
+## load environment variable from ".env"
+useDotenv: true
+
+## allows you to run the application on localhost
+plugins:
+  - serverless-offline
+
+custom:
+  params:
+    MEDIA_BUCKET_NAME: ${env:MEDIA_BUCKET_NAME}
+    USER_TABLE_NAME: ${env:USER_TABLE_NAME}
+    USER_TABLE_ARN: ${env:USER_TABLE_ARN}
+
+## which files should or should not be packed in the lambda function
+package:
+  patterns:
+    - '!./**'
+    - './src/**'
+    - './node_modules/**'
+    - '!./node_modules/aws-sdk/**'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    REGION: ${opt:region, 'us-east-1'}
+    MEDIA_BUCKET_NAME: ${self:custom.params.MEDIA_BUCKET_NAME}
+    USER_TABLE_NAME: ${self:custom.params.USER_TABLE_NAME}
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:Scan'
+            - 'dynamodb:Query'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:DeleteItem'
+            - 'dynamodb:UpdateItem'
+          Resource:
+            - ${self:custom.params.USER_TABLE_ARN}
+            - ${self:custom.params.USER_TABLE_ARN}/index/*
+        - Effect: 'Allow'
+          Action:
+            - 's3:PutObject'
+            - 's3:GetObject'
+          Resource:
+            - 'arn:aws:s3:::${self:custom.params.MEDIA_BUCKET_NAME}'
+
+functions:
+  main:
+    handler: src/main/config/handler.handler
+    timeout: 7
+    events:
+      - http:
+          method: GET
+          path: '/users'
+          cors: true
+      - http:
+          method: POST
+          path: '/users'
+          cors: true
+      - http:
+          method: GET
+          path: '/users/{idOrEmail}'
+          cors: true
+      - http:
+          method: PATCH
+          path: '/users/{idOrEmail}'
+          cors: true
+      - http:
+          method: PATCH
+          path: '/users/{idOrEmail}/image'
+          cors: true
+      - http:
+          method: DELETE
+          path: '/users/{idOrEmail}'
+          cors: true
