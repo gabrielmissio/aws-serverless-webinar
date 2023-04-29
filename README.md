@@ -22,7 +22,7 @@ The `/tools/functions` folder contains the code for the Lambda function that lis
 
 ### Collection
 
-The `/tools/collection` folder contains a Postman collection that can be used to interact with the User API.
+The `/tools/collections` folder contains a Postman collection that can be used to interact with the User API.
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ For more information on how to deploy the application, please refer to the READM
 
 Below is a visual representation of the final solution. The backend has been migrated to serverless using Lambda and the Serverless Framework, while the frontend is hosted on an S3 bucket for static websites. The application leverages the power of AWS services such as DynamoDB and S3, and uses S3 events to trigger a Lambda function whenever a new image is uploaded to the S3 bucket.
 
-![image](./media/imgs/final-solution.drawio.png)
+![image](./media/imgs/pt4.drawio.png)
 
 ## License
 
