@@ -1,6 +1,6 @@
-# Cloud and Serverless
+# AWS and Serverless
 
-This repository contains the code and resources used in the "Cloud and Serverless" webinar, where we migrated a traditional Express server application to serverless using AWS Lambda and other serverless technologies.
+This repository contains the code and resources used in the "AWS and Serverless" webinar, where we migrated a traditional Express server application to serverless using AWS Lambda and other serverless technologies.
 
 ## API
 
