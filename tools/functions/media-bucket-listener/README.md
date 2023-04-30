@@ -25,7 +25,7 @@ The Serverless Framework will automatically include these environment variables 
 To invoke the lambda function locally, navigate to the `tools/functions/media-bucket-listener` directory and run:
 
 ```bash
-sls invoke local --function main --path events/create-object-demo.json --env
+sls invoke local --function main --path events/create-object-demo.json --env .env
 ```
 
 or use the above command from "dev" package.json script

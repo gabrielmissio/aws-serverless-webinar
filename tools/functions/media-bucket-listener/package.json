@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "sls invoke local --function main --path events/create-object-demo.json --env",
+    "dev": "sls invoke local --function main --path events/create-object-demo.json --env .env",
     "deploy": "sls deploy --verbose --stage dev"
   },
   "author": "Gabriel Missio",
